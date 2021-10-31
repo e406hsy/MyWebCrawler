@@ -28,6 +28,7 @@ public class ConfigReaderImpl implements ConfigReader {
         File file = new File(this.context.getFilesDir(), this.configFileName);
         if (!file.exists()) {
             file.createNewFile();
+            setCrawlConfig(new CrawlConfig());
         }
 
     }

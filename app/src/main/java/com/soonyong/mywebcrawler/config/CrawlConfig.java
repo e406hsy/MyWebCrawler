@@ -1,9 +1,9 @@
 package com.soonyong.mywebcrawler.config;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 
 import java.net.URI;
+import java.util.Collections;
 import java.util.List;
 
 import lombok.AccessLevel;
@@ -14,12 +14,15 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Getter
-@NoArgsConstructor
 @AllArgsConstructor
 @ToString
 public class CrawlConfig {
 
     private List<Target> targets;
+
+    public CrawlConfig() {
+        this(Collections.emptyList());
+    }
 
     @Getter
     @ToString
@@ -31,6 +34,7 @@ public class CrawlConfig {
             return new TargetBuilder();
         }
 
+        private String title;
         private boolean active;
         private long interval;
         private URI url;
@@ -38,10 +42,16 @@ public class CrawlConfig {
 
         @NoArgsConstructor(access = AccessLevel.PRIVATE)
         public static class TargetBuilder {
+            private String title;
             private boolean active;
             private long interval;
             private String url;
             private String targetXPath;
+
+            public TargetBuilder title(String title) {
+                this.title = title;
+                return this;
+            }
 
             public TargetBuilder active(boolean active) {
                 this.active = active;
@@ -65,6 +75,7 @@ public class CrawlConfig {
 
             public Target build() {
                 Target target = new Target();
+                target.title = this.title;
                 target.active = this.active;
                 target.interval = this.interval;
                 target.targetXPath = this.targetXPath;
