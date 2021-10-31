@@ -29,6 +29,10 @@ android {
     buildFeatures {
         viewBinding true
     }
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES.txt'
+        exclude 'META-INF/DEPENDENCIES'
+    }
 }
 
 dependencies {
@@ -39,8 +43,15 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment:2.3.0'
     implementation 'androidx.navigation:navigation-ui:2.3.0'
 
-    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+    // apache httpclient
+    implementation 'org.apache.httpcomponents:httpclient:4.5.13'
+
+    // jackson
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.0'
+
+    // lombok
+    compileOnly 'org.projectlombok:lombok:1.18.12'
+    annotationProcessor 'org.projectlombok:lombok:1.18.12'
 
 
     testImplementation 'junit:junit:4.+'
