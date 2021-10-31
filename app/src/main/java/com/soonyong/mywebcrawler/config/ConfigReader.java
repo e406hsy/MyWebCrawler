@@ -1,5 +1,11 @@
 package com.soonyong.mywebcrawler.config;
 
-public class ConfigReader {
+import android.content.Context;
 
+import java.io.IOException;
+
+public interface ConfigReader {
+    CrawlConfig getCrawlConfig() throws IOException;
+
+    void setCrawlConfig(CrawlConfig crawlConfig) throws IOException;
 }
