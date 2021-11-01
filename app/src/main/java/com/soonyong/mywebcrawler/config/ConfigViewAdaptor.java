@@ -50,9 +50,11 @@ public class ConfigViewAdaptor extends BaseAdapter {
         CrawlConfig.Target target = configReader.getCrawlConfig().getTargets().get(position);
 
         View v = vi.inflate(R.layout.list_item, null);
-        TextView sectionName = (TextView) v.findViewById(R.id.firstLine);
+        TextView title = v.findViewById(R.id.firstLine);
 
-        sectionName.setText(target.getTitle());
+        title.setText(target.getTitle());
+        TextView url = v.findViewById(R.id.secondLine);
+        url.setText(target.getUrl().toString());
         return v;
     }
 }
