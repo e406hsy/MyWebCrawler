@@ -2,7 +2,6 @@ package com.soonyong.mywebcrawler.config;
 
 
 import android.content.Context;
-import android.util.Log;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
@@ -37,6 +36,7 @@ public class ConfigReaderTest {
     @Test
     public void testSetCrawlConfig() throws IOException {
         CrawlConfig crawlConfig = new CrawlConfig(List.of(CrawlConfig.Target.builder()
+                .title("my test title")
                 .active(false)
                 .interval(1000)
                 .targetXPath("test")

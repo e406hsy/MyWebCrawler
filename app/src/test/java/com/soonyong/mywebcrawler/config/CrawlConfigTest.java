@@ -20,6 +20,7 @@ public class CrawlConfigTest {
                 "   \"targets\" : " +
                 "   [" +
                 "       {" +
+                "           \"title\":\"my title\"" +
                 "           \"active\":true," +
                 "           \"interval\":1000," +
                 "           \"url\":\"https://www.google.com\"," +
@@ -39,5 +40,6 @@ public class CrawlConfigTest {
         assertTrue(target.isActive());
         assertEquals(1000, target.getInterval());
         assertEquals("myXPath", target.getTargetXPath());
+        assertEquals("my title", target.getTitle());
     }
 }
