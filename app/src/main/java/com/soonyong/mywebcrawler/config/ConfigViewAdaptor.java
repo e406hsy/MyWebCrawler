@@ -21,7 +21,7 @@ public class ConfigViewAdaptor extends BaseAdapter {
 
     public ConfigViewAdaptor(Context context) throws IOException {
         this.context = context;
-        this.configReader = new InMemoryConfigReader();
+        this.configReader = new ConfigReaderImpl(context);
     }
 
     @SneakyThrows
