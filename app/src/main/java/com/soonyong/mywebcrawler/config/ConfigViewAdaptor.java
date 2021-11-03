@@ -44,7 +44,6 @@ public class ConfigViewAdaptor extends BaseAdapter {
     @SneakyThrows
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Log.d(getClass().getName(), convertView == null ? "convertView is null" : convertView.toString());
         LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         CrawlConfig.Target target = configReader.getCrawlConfig().getTargets().get(position);
@@ -55,6 +54,17 @@ public class ConfigViewAdaptor extends BaseAdapter {
         title.setText(target.getTitle());
         TextView url = v.findViewById(R.id.secondLine);
         url.setText(target.getUrl().toString());
+
+        View viewById = v.findViewById(R.id.deleteButton);
+
+        viewById.setOnClickListener(v1 -> {
+            try {
+                this.configReader.getCrawlConfig().getTargets().remove(position);
+                notifyDataSetChanged();
+            } catch (RuntimeException e) {
+                Log.i(getClass().getName() + ".R.id.deleteButton.onClickListener", "pos : " + position, e);
+            }
+        });
         return v;
     }
 }
