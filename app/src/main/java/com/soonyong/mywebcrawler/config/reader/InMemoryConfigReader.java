@@ -1,10 +1,12 @@
-package com.soonyong.mywebcrawler.config;
+package com.soonyong.mywebcrawler.config.reader;
+
+import com.soonyong.mywebcrawler.config.CrawlConfig;
+import com.soonyong.mywebcrawler.config.reader.ConfigReader;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
 
-public class InMemoryConfigReader implements ConfigReader{
+public class InMemoryConfigReader implements ConfigReader {
 
     private CrawlConfig crawlConfig;
 

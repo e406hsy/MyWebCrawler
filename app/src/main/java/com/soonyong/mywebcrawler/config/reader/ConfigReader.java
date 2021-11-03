@@ -1,4 +1,6 @@
-package com.soonyong.mywebcrawler.config;
+package com.soonyong.mywebcrawler.config.reader;
+
+import com.soonyong.mywebcrawler.config.CrawlConfig;
 
 import java.io.IOException;
 

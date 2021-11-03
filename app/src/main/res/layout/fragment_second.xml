@@ -6,22 +6,131 @@
     android:layout_height="match_parent"
     tools:context=".SecondFragment">
 
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/interval_input"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="@string/interval_place_holder"
+        android:inputType="numberDecimal"
+        app:layout_constraintTop_toBottomOf="@+id/interval_label"
+        tools:layout_editor_absoluteX="0dp" />
+
     <TextView
-        android:id="@+id/textview_second"
+        android:id="@+id/interval_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/button_second"
+        android:text="@string/interval_label"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/xpath_input" />
+
+    <TextView
+        android:id="@+id/active_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/active_label"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/interval_input" />
+
+    <TextView
+        android:id="@+id/url_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/url_label"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title_input" />
+
+    <EditText
+        android:id="@+id/url_input"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="@string/url_place_holder"
+        android:inputType="textUri"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/url_label" />
 
     <Button
-        android:id="@+id/button_second"
+        android:id="@+id/button_prev"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
         android:text="@string/previous"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:text="@string/save"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/xpath_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/xpath_label"
+        android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textview_second" />
+        app:layout_constraintTop_toBottomOf="@+id/url_input" />
+
+    <TextView
+        android:id="@+id/title_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title_label"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/title_input"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="@string/title_place_holder"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title_label" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/xpath_input"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="@string/xpath_place_holder"
+        android:inputType="text"
+        app:layout_constraintTop_toBottomOf="@+id/xpath_label"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <RadioGroup
+        android:id="@+id/active_radio_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/active_label">
+
+        <RadioButton
+            android:id="@+id/active_radio_true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/active_radio_true"
+            android:textSize="24sp" />
+
+        <RadioButton
+            android:id="@+id/active_radio_false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/active_radio_false"
+            android:textSize="24sp" />
+    </RadioGroup>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

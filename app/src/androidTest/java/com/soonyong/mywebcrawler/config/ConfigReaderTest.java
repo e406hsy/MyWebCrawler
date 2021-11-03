@@ -16,6 +16,9 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import com.soonyong.mywebcrawler.config.reader.ConfigReader;
+import com.soonyong.mywebcrawler.config.reader.ConfigReaderImpl;
+
 @RunWith(AndroidJUnit4.class)
 public class ConfigReaderTest {
 

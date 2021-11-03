@@ -9,6 +9,9 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.soonyong.mywebcrawler.R;
+import com.soonyong.mywebcrawler.config.reader.ConfigReader;
+import com.soonyong.mywebcrawler.config.reader.ConfigReaderFactory;
+import com.soonyong.mywebcrawler.config.reader.InMemoryConfigReader;
 
 import java.io.IOException;
 
@@ -21,7 +24,7 @@ public class ConfigViewAdaptor extends BaseAdapter {
 
     public ConfigViewAdaptor(Context context) throws IOException {
         this.context = context;
-        this.configReader = new ConfigReaderImpl(context);
+        this.configReader = ConfigReaderFactory.getConfigReader(context);
     }
 
     @SneakyThrows
@@ -61,7 +64,7 @@ public class ConfigViewAdaptor extends BaseAdapter {
             try {
                 this.configReader.getCrawlConfig().getTargets().remove(position);
                 notifyDataSetChanged();
-            } catch (RuntimeException e) {
+            } catch (IOException e) {
                 Log.i(getClass().getName() + ".R.id.deleteButton.onClickListener", "pos : " + position, e);
             }
         });

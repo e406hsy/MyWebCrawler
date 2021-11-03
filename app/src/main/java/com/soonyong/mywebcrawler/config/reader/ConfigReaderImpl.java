@@ -1,8 +1,10 @@
-package com.soonyong.mywebcrawler.config;
+package com.soonyong.mywebcrawler.config.reader;
 
 import android.content.Context;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.soonyong.mywebcrawler.config.CrawlConfig;
+import com.soonyong.mywebcrawler.config.reader.ConfigReader;
 
 import java.io.File;
 import java.io.FileInputStream;

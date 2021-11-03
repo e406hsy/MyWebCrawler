@@ -7,7 +7,16 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
     <string name="delete">삭제</string>
-
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="save">저장</string>
+    <string name="xpath_label">xPath</string>
+    <string name="xpath_place_holder">xPath를 입력하세요</string>
+    <string name="title_label">제목</string>
+    <string name="title_place_holder">제목을 입력하세요.</string>
+    <string name="interval_label">반복 시간 (단위 : 초)</string>
+    <string name="interval_place_holder">반복 시간을 입력하십시오. (단위 : 초)</string>
+    <string name="active_label">활성화 상태</string>
+    <string name="active_radio_true">활성화</string>
+    <string name="active_radio_false">비활성화</string>
+    <string name="url_label">URL</string>
+    <string name="url_place_holder">URL을 입력하세요</string>
 </resources>
