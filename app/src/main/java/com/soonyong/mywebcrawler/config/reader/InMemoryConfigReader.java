@@ -1,7 +1,6 @@
 package com.soonyong.mywebcrawler.config.reader;
 
 import com.soonyong.mywebcrawler.config.CrawlConfig;
-import com.soonyong.mywebcrawler.config.reader.ConfigReader;
 
 import java.io.IOException;
 import java.util.List;
@@ -37,5 +36,10 @@ public class InMemoryConfigReader implements ConfigReader {
     @Override
     public void setCrawlConfig(CrawlConfig crawlConfig) throws IOException {
         this.crawlConfig = crawlConfig;
+    }
+
+    @Override
+    public void addCrawlConfigTarget(CrawlConfig.Target target) throws IOException {
+        this.crawlConfig.getTargets().add(target);
     }
 }

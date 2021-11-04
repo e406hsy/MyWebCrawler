@@ -12,7 +12,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.soonyong.mywebcrawler.config.CrawlConfig;
+import com.soonyong.mywebcrawler.config.reader.ConfigReader;
+import com.soonyong.mywebcrawler.config.reader.ConfigReaderFactory;
 import com.soonyong.mywebcrawler.databinding.FragmentSecondBinding;
+
+import java.io.IOException;
 
 public class SecondFragment extends Fragment {
 
@@ -32,7 +37,32 @@ public class SecondFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.buttonPrev.setOnClickListener(view1 -> NavHostFragment.findNavController(SecondFragment.this)
+        binding.buttonSave.setOnClickListener(button ->
+                {
+                    if (binding.urlInput.getText().length() == 0 || binding.intervalInput.getText().length() == 0
+                            || binding.titleInput.getText().length() == 0 || binding.xpathInput.getText().length() == 0
+                            || (!binding.activeRadioTrue.isChecked() && !binding.activeRadioFalse.isChecked())) {
+                        return;
+                    }
+
+                    try {
+                        ConfigReader configReader = ConfigReaderFactory.getConfigReader(getContext());
+                        configReader.addCrawlConfigTarget(CrawlConfig.Target.builder()
+                                .url(binding.urlInput.getText().toString())
+                                .interval(Long.parseLong(binding.intervalInput.getText().toString()))
+                                .title(binding.titleInput.getText().toString())
+                                .active(binding.activeRadioTrue.isChecked())
+                                .targetXPath(binding.xpathInput.getText().toString())
+                                .build());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    NavHostFragment.findNavController(SecondFragment.this)
+                            .navigate(R.id.action_SecondFragment_to_FirstFragment);
+                }
+        );
+
+        binding.buttonPrev.setOnClickListener(button -> NavHostFragment.findNavController(SecondFragment.this)
                 .navigate(R.id.action_SecondFragment_to_FirstFragment));
     }
 

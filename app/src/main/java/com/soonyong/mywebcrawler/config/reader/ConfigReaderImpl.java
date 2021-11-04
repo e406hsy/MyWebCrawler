@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.soonyong.mywebcrawler.config.CrawlConfig;
-import com.soonyong.mywebcrawler.config.reader.ConfigReader;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -51,6 +50,12 @@ public class ConfigReaderImpl implements ConfigReader {
     @Override
     public void setCrawlConfig(CrawlConfig crawlConfig) throws IOException {
         this.crawlConfig = crawlConfig;
+        saveCrawlConfig();
+    }
+
+    @Override
+    public void addCrawlConfigTarget(CrawlConfig.Target target) throws IOException {
+        this.crawlConfig.getTargets().add(target);
         saveCrawlConfig();
     }
 

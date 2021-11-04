@@ -8,4 +8,6 @@ public interface ConfigReader {
     CrawlConfig getCrawlConfig() throws IOException;
 
     void setCrawlConfig(CrawlConfig crawlConfig) throws IOException;
+
+    void addCrawlConfigTarget(CrawlConfig.Target target) throws IOException;
 }
