@@ -13,8 +13,8 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.soonyong.mywebcrawler.config.CrawlConfig;
-import com.soonyong.mywebcrawler.config.reader.ConfigReader;
-import com.soonyong.mywebcrawler.config.reader.ConfigReaderFactory;
+import com.soonyong.mywebcrawler.config.manage.ConfigManager;
+import com.soonyong.mywebcrawler.config.manage.ConfigManagerFactory;
 import com.soonyong.mywebcrawler.databinding.FragmentSecondBinding;
 
 import java.io.IOException;
@@ -46,8 +46,8 @@ public class SecondFragment extends Fragment {
                     }
 
                     try {
-                        ConfigReader configReader = ConfigReaderFactory.getConfigReader(getContext());
-                        configReader.addCrawlConfigTarget(CrawlConfig.Target.builder()
+                        ConfigManager configManager = ConfigManagerFactory.getConfigManager(getContext());
+                        configManager.addCrawlConfigTarget(CrawlConfig.Target.builder()
                                 .url(binding.urlInput.getText().toString())
                                 .interval(Long.parseLong(binding.intervalInput.getText().toString()))
                                 .title(binding.titleInput.getText().toString())

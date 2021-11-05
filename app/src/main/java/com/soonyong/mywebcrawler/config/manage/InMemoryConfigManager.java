@@ -1,15 +1,15 @@
-package com.soonyong.mywebcrawler.config.reader;
+package com.soonyong.mywebcrawler.config.manage;
 
 import com.soonyong.mywebcrawler.config.CrawlConfig;
 
 import java.io.IOException;
 import java.util.List;
 
-public class InMemoryConfigReader implements ConfigReader {
+public class InMemoryConfigManager implements ConfigManager {
 
     private CrawlConfig crawlConfig;
 
-    public InMemoryConfigReader() {
+    public InMemoryConfigManager() {
         List<CrawlConfig.Target> targets = new java.util.ArrayList<>();
         targets.add(CrawlConfig.Target.builder()
                 .active(true)

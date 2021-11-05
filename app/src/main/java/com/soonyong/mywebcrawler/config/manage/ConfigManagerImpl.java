@@ -1,4 +1,4 @@
-package com.soonyong.mywebcrawler.config.reader;
+package com.soonyong.mywebcrawler.config.manage;
 
 import android.content.Context;
 
@@ -11,7 +11,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public class ConfigReaderImpl implements ConfigReader {
+public class ConfigManagerImpl implements ConfigManager {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
     private CrawlConfig crawlConfig;
@@ -19,11 +19,11 @@ public class ConfigReaderImpl implements ConfigReader {
     private final String configFileName;
     private static final String DEFAULT_CONFIG_FILE_NAME = "crawlConfig.json";
 
-    public ConfigReaderImpl(Context context) throws IOException {
+    public ConfigManagerImpl(Context context) throws IOException {
         this(context, DEFAULT_CONFIG_FILE_NAME);
     }
 
-    public ConfigReaderImpl(Context context, String fileName) throws IOException {
+    public ConfigManagerImpl(Context context, String fileName) throws IOException {
         this.context = context;
         this.configFileName = fileName;
         File file = new File(this.context.getFilesDir(), this.configFileName);

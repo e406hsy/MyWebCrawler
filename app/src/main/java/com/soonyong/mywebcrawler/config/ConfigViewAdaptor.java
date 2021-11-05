@@ -9,9 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.soonyong.mywebcrawler.R;
-import com.soonyong.mywebcrawler.config.reader.ConfigReader;
-import com.soonyong.mywebcrawler.config.reader.ConfigReaderFactory;
-import com.soonyong.mywebcrawler.config.reader.InMemoryConfigReader;
+import com.soonyong.mywebcrawler.config.manage.ConfigManager;
+import com.soonyong.mywebcrawler.config.manage.ConfigManagerFactory;
 
 import java.io.IOException;
 
@@ -19,24 +18,24 @@ import lombok.SneakyThrows;
 
 public class ConfigViewAdaptor extends BaseAdapter {
 
-    private ConfigReader configReader;
+    private ConfigManager configManager;
     private final Context context;
 
     public ConfigViewAdaptor(Context context) throws IOException {
         this.context = context;
-        this.configReader = ConfigReaderFactory.getConfigReader(context);
+        this.configManager = ConfigManagerFactory.getConfigManager(context);
     }
 
     @SneakyThrows
     @Override
     public int getCount() {
-        return this.configReader.getCrawlConfig().getTargets().size();
+        return this.configManager.getCrawlConfig().getTargets().size();
     }
 
     @SneakyThrows
     @Override
     public CrawlConfig.Target getItem(int position) {
-        return this.configReader.getCrawlConfig().getTargets().get(position);
+        return this.configManager.getCrawlConfig().getTargets().get(position);
     }
 
     @Override
@@ -49,7 +48,7 @@ public class ConfigViewAdaptor extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        CrawlConfig.Target target = configReader.getCrawlConfig().getTargets().get(position);
+        CrawlConfig.Target target = configManager.getCrawlConfig().getTargets().get(position);
 
         View v = vi.inflate(R.layout.list_item, null);
         TextView title = v.findViewById(R.id.firstLine);
@@ -62,7 +61,7 @@ public class ConfigViewAdaptor extends BaseAdapter {
 
         viewById.setOnClickListener(v1 -> {
             try {
-                this.configReader.getCrawlConfig().getTargets().remove(position);
+                this.configManager.getCrawlConfig().getTargets().remove(position);
                 notifyDataSetChanged();
             } catch (IOException e) {
                 Log.i(getClass().getName() + ".R.id.deleteButton.onClickListener", "pos : " + position, e);

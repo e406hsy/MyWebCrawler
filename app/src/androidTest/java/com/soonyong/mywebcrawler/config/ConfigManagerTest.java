@@ -16,18 +16,18 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import com.soonyong.mywebcrawler.config.reader.ConfigReader;
-import com.soonyong.mywebcrawler.config.reader.ConfigReaderImpl;
+import com.soonyong.mywebcrawler.config.manage.ConfigManager;
+import com.soonyong.mywebcrawler.config.manage.ConfigManagerImpl;
 
 @RunWith(AndroidJUnit4.class)
-public class ConfigReaderTest {
+public class ConfigManagerTest {
 
-    ConfigReaderImpl configReader;
+    ConfigManagerImpl configReader;
 
     @Before
     public void setUp() throws Exception {
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        configReader = new ConfigReaderImpl(appContext, "test.json");
+        configReader = new ConfigManagerImpl(appContext, "test.json");
     }
 
 
@@ -48,8 +48,8 @@ public class ConfigReaderTest {
         this.configReader.setCrawlConfig(crawlConfig);
 
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        ConfigReader configReader = new ConfigReaderImpl(appContext, "test.json");
-        CrawlConfig savedCrawlConfig = configReader.getCrawlConfig();
+        ConfigManager configManager = new ConfigManagerImpl(appContext, "test.json");
+        CrawlConfig savedCrawlConfig = configManager.getCrawlConfig();
         assertEquals(savedCrawlConfig.getTargets().size(), crawlConfig.getTargets().size());
         assertTrue(savedCrawlConfig.getTargets().containsAll(crawlConfig.getTargets()));
     }

@@ -1,10 +1,10 @@
-package com.soonyong.mywebcrawler.config.reader;
+package com.soonyong.mywebcrawler.config.manage;
 
 import com.soonyong.mywebcrawler.config.CrawlConfig;
 
 import java.io.IOException;
 
-public interface ConfigReader {
+public interface ConfigManager {
     CrawlConfig getCrawlConfig() throws IOException;
 
     void setCrawlConfig(CrawlConfig crawlConfig) throws IOException;
