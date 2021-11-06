@@ -7,7 +7,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -15,8 +14,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.google.android.material.snackbar.Snackbar;
-import com.soonyong.mywebcrawler.crawl.MyJobService;
+import com.soonyong.mywebcrawler.crawl.CrawlJobService;
 import com.soonyong.mywebcrawler.databinding.ActivityMainBinding;
 
 import java.util.concurrent.TimeUnit;
@@ -46,9 +44,9 @@ public class MainActivity extends AppCompatActivity {
     private void registerBackgroundJob() {
         JobScheduler jobScheduler = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
         jobScheduler.schedule(new JobInfo.Builder(123,
-                new ComponentName(this, MyJobService.class))
+                new ComponentName(this, CrawlJobService.class))
                 .setMinimumLatency(TimeUnit.SECONDS.toMillis(5))
-                // .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
+                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
                 .build());
     }
 

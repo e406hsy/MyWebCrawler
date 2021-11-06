@@ -13,10 +13,10 @@ public class InMemoryConfigManager implements ConfigManager {
         List<CrawlConfig.Target> targets = new java.util.ArrayList<>();
         targets.add(CrawlConfig.Target.builder()
                 .active(true)
-                .title("default")
+                .title("ppomppu")
                 .interval(1000000)
-                .url("http://www.google.com")
-                .targetXPath("html")
+                .url("https://www.ppomppu.co.kr/zboard/zboard.php?id=ppomppu")
+                .targetXPath("//*[@id=\"revolution_main_table\"]/tbody/tr/td[3]/table/tbody/tr/td[2]/div/a/font")
                 .build());
         targets.add(CrawlConfig.Target.builder()
                 .active(true)
