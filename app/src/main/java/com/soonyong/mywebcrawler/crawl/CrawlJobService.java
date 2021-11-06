@@ -1,7 +1,8 @@
 package com.soonyong.mywebcrawler.crawl;
 
-import android.app.job.JobParameters;
-import android.app.job.JobService;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import com.soonyong.mywebcrawler.config.CrawlConfig;
@@ -15,7 +16,7 @@ import java.util.concurrent.Executors;
 
 import lombok.SneakyThrows;
 
-public class CrawlJobService extends JobService {
+public class CrawlJobService extends BroadcastReceiver {
     private static final Executor executor = Executors.newCachedThreadPool();
 
     private String TAG = "MyJobService";
@@ -28,11 +29,11 @@ public class CrawlJobService extends JobService {
 
     @SneakyThrows
     @Override
-    public boolean onStartJob(JobParameters params) {
-        Log.d(TAG, "onStartJob: " + params.getJobId() + " main thread start");
-        ConfigManager configManager = ConfigManagerFactory.getConfigManager(getApplicationContext());
+    public void onReceive(Context context, Intent intent) {
+        Log.d(TAG, "onStartJob: " + intent + " main thread start");
+        ConfigManager configManager = ConfigManagerFactory.getConfigManager(context);
         executor.execute(() -> {
-                    Log.d(TAG, "onStartJob: " + params.getJobId() + " child thread job");
+                    Log.d(TAG, "onStartJob: " + intent + " child thread job");
                     CrawlConfig.Target target = null;
                     try {
                         target = configManager.getCrawlConfig().getTargets().get(0);
@@ -43,13 +44,6 @@ public class CrawlJobService extends JobService {
                     Log.d(getClass().getName(), texts.toString());
                 }
         );
-        Log.d(TAG, "onStartJob: " + params.getJobId() + " main thread end");
-        return false;
-    }
-
-    @Override
-    public boolean onStopJob(JobParameters params) {
-        Log.d(TAG, "onStopJob: " + params.getJobId());
-        return false;
+        Log.d(TAG, "onStartJob: " + intent + " main thread end");
     }
 }

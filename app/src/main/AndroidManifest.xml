@@ -3,6 +3,7 @@
     package="com.soonyong.mywebcrawler">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <application
         android:allowBackup="true"
@@ -21,6 +22,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <receiver android:name=".crawl.SampleBootReceiver"
+            android:exported="false"
+            android:enabled="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"></action>
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".crawl.CrawlJobService"
+            android:exported="false">
+
+        </receiver>
 
         <service
             android:name=".crawl.CrawlJobService"

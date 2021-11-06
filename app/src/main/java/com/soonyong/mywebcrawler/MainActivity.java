@@ -1,10 +1,9 @@
 package com.soonyong.mywebcrawler;
 
-import android.app.job.JobInfo;
-import android.app.job.JobScheduler;
 import android.content.ComponentName;
-import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -14,42 +13,36 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.soonyong.mywebcrawler.crawl.CrawlJobService;
+import com.soonyong.mywebcrawler.crawl.SampleBootReceiver;
 import com.soonyong.mywebcrawler.databinding.ActivityMainBinding;
 
-import java.util.concurrent.TimeUnit;
-
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = "MainActivity";
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG, "onCreate: ");
         super.onCreate(savedInstanceState);
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         setSupportActionBar(binding.toolbar);
+        ComponentName receiver = new ComponentName(getApplicationContext(), SampleBootReceiver.class);
+        PackageManager pm = getApplicationContext().getPackageManager();
 
-        registerBackgroundJob();
+        pm.setComponentEnabledSetting(receiver,
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                PackageManager.DONT_KILL_APP);
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph())
                 .build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
     }
-
-    private void registerBackgroundJob() {
-        JobScheduler jobScheduler = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
-        jobScheduler.schedule(new JobInfo.Builder(123,
-                new ComponentName(this, CrawlJobService.class))
-                .setMinimumLatency(TimeUnit.SECONDS.toMillis(5))
-                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
-                .build());
-    }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
