@@ -1,23 +1,21 @@
 package com.soonyong.mywebcrawler.config;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import android.content.Context;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
+import com.soonyong.mywebcrawler.config.manage.ConfigManager;
+import com.soonyong.mywebcrawler.config.manage.ConfigManagerImpl;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.IOException;
-import java.util.List;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import com.soonyong.mywebcrawler.config.manage.ConfigManager;
-import com.soonyong.mywebcrawler.config.manage.ConfigManagerImpl;
 
 @RunWith(AndroidJUnit4.class)
 public class ConfigManagerTest {
@@ -38,19 +36,19 @@ public class ConfigManagerTest {
 
     @Test
     public void testSetCrawlConfig() throws IOException {
-        CrawlConfig crawlConfig = new CrawlConfig(List.of(CrawlConfig.Target.builder()
+        CrawlConfig.Target target = CrawlConfig.Target.builder()
                 .title("my test title")
                 .active(false)
                 .interval(1000)
                 .targetXPath("test")
                 .url("http://www.example.com")
-                .build()));
-        this.configReader.setCrawlConfig(crawlConfig);
+                .build();
+        this.configReader.addCrawlConfigTarget(target);
 
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         ConfigManager configManager = new ConfigManagerImpl(appContext, "test.json");
         CrawlConfig savedCrawlConfig = configManager.getCrawlConfig();
-        assertEquals(savedCrawlConfig.getTargets().size(), crawlConfig.getTargets().size());
-        assertTrue(savedCrawlConfig.getTargets().containsAll(crawlConfig.getTargets()));
+        assertEquals(1, savedCrawlConfig.getTargets().size());
+        assertTrue(savedCrawlConfig.getTargets().contains(target));
     }
 }

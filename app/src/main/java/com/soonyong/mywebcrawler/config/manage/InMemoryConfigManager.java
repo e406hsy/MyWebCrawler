@@ -34,11 +34,6 @@ public class InMemoryConfigManager implements ConfigManager {
     }
 
     @Override
-    public void setCrawlConfig(CrawlConfig crawlConfig) throws IOException {
-        this.crawlConfig = crawlConfig;
-    }
-
-    @Override
     public void addCrawlConfigTarget(CrawlConfig.Target target) throws IOException {
         this.crawlConfig.getTargets().add(target);
     }

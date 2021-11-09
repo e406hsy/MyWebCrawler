@@ -1,5 +1,10 @@
 package com.soonyong.mywebcrawler;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -15,6 +20,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.soonyong.mywebcrawler.config.CrawlConfig;
 import com.soonyong.mywebcrawler.config.manage.ConfigManager;
 import com.soonyong.mywebcrawler.config.manage.ConfigManagerFactory;
+import com.soonyong.mywebcrawler.crawl.CrawlJobService;
 import com.soonyong.mywebcrawler.databinding.FragmentSecondBinding;
 
 import java.io.IOException;
@@ -54,6 +60,16 @@ public class SecondFragment extends Fragment {
                                 .active(binding.activeRadioTrue.isChecked())
                                 .targetXPath(binding.xpathInput.getText().toString())
                                 .build());
+
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.setTimeInMillis(System.currentTimeMillis());
+                        calendar.set(Calendar.HOUR_OF_DAY, 8);
+                        calendar.set(Calendar.MINUTE, 0);
+                        AlarmManager alarmManager = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
+                        Intent crawlIntent = new Intent(getContext(), CrawlJobService.class);
+                        PendingIntent alarmIntent = PendingIntent.getBroadcast(getContext(), 0, crawlIntent, 0);
+                        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, alarmIntent);
+
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

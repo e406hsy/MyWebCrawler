@@ -47,8 +47,7 @@ public class ConfigManagerImpl implements ConfigManager {
         return this.crawlConfig;
     }
 
-    @Override
-    public void setCrawlConfig(CrawlConfig crawlConfig) throws IOException {
+    private void setCrawlConfig(CrawlConfig crawlConfig) throws IOException {
         this.crawlConfig = crawlConfig;
         saveCrawlConfig();
     }

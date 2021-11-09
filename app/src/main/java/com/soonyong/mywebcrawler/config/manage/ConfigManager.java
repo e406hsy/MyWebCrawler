@@ -7,7 +7,5 @@ import java.io.IOException;
 public interface ConfigManager {
     CrawlConfig getCrawlConfig() throws IOException;
 
-    void setCrawlConfig(CrawlConfig crawlConfig) throws IOException;
-
     void addCrawlConfigTarget(CrawlConfig.Target target) throws IOException;
 }
