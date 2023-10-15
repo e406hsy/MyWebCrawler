@@ -41,7 +41,7 @@ class ConfigManagerTest {
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
         val configManager: ConfigManager = ConfigManagerImpl(appContext, "test.json")
         val savedCrawlConfig = configManager.crawlConfig
-        assertEquals(1, savedCrawlConfig!!.targets.size)
+        assertEquals(1, savedCrawlConfig.targets.size)
         Assert.assertTrue(savedCrawlConfig.targets.contains(target))
     }
 }

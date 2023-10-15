@@ -7,7 +7,6 @@ import android.content.Context
 import android.content.Intent
 import android.icu.util.Calendar
 import android.util.Log
-import com.soonyong.mywebcrawler.crawl.CrawlJobService
 
 class SampleBootReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
