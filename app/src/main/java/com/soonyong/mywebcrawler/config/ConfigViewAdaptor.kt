@@ -1,72 +1,49 @@
-package com.soonyong.mywebcrawler.config;
+package com.soonyong.mywebcrawler.config
 
-import android.content.Context;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.TextView;
+import android.content.Context
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.BaseAdapter
+import android.widget.TextView
+import com.soonyong.mywebcrawler.R
+import com.soonyong.mywebcrawler.config.manage.ConfigManager
+import com.soonyong.mywebcrawler.config.manage.ConfigManagerFactory
+import java.io.IOException
 
-import com.soonyong.mywebcrawler.R;
-import com.soonyong.mywebcrawler.config.manage.ConfigManager;
-import com.soonyong.mywebcrawler.config.manage.ConfigManagerFactory;
+class ConfigViewAdaptor(private val context: Context) : BaseAdapter() {
+    private val configManager: ConfigManager = ConfigManagerFactory.getConfigManager(context)!!
 
-import java.io.IOException;
-
-import lombok.SneakyThrows;
-
-public class ConfigViewAdaptor extends BaseAdapter {
-
-    private ConfigManager configManager;
-    private final Context context;
-
-    public ConfigViewAdaptor(Context context) throws IOException {
-        this.context = context;
-        this.configManager = ConfigManagerFactory.getConfigManager(context);
+    override fun getCount(): Int {
+        return configManager.crawlConfig.targets.size
     }
 
-    @SneakyThrows
-    @Override
-    public int getCount() {
-        return this.configManager.getCrawlConfig().getTargets().size();
+    override fun getItem(position: Int): CrawlConfig.Target {
+        return configManager.crawlConfig.targets[position]
     }
 
-    @SneakyThrows
-    @Override
-    public CrawlConfig.Target getItem(int position) {
-        return this.configManager.getCrawlConfig().getTargets().get(position);
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
     }
 
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @SneakyThrows
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        CrawlConfig.Target target = configManager.getCrawlConfig().getTargets().get(position);
-
-        View v = vi.inflate(R.layout.list_item, null);
-        TextView title = v.findViewById(R.id.firstLine);
-
-        title.setText(target.getTitle());
-        TextView url = v.findViewById(R.id.secondLine);
-        url.setText(target.getUrl().toString());
-
-        View viewById = v.findViewById(R.id.deleteButton);
-
-        viewById.setOnClickListener(v1 -> {
+    override fun getView(position: Int, convertView: View, parent: ViewGroup): View {
+        val vi = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val target: CrawlConfig.Target = configManager.crawlConfig.targets[position]
+        val v = vi.inflate(R.layout.list_item, null)
+        val title = v.findViewById<TextView>(R.id.firstLine)
+        title.text = target.title
+        val url = v.findViewById<TextView>(R.id.secondLine)
+        url.text = target.url.toString()
+        val viewById = v.findViewById<View>(R.id.deleteButton)
+        viewById.setOnClickListener {
             try {
-                this.configManager.getCrawlConfig().getTargets().remove(position);
-                notifyDataSetChanged();
-            } catch (IOException e) {
-                Log.i(getClass().getName() + ".R.id.deleteButton.onClickListener", "pos : " + position, e);
+                configManager.crawlConfig.targets.removeAt(position)
+                notifyDataSetChanged()
+            } catch (e: IOException) {
+                Log.i(javaClass.name + ".R.id.deleteButton.onClickListener", "pos : $position", e)
             }
-        });
-        return v;
+        }
+        return v
     }
 }

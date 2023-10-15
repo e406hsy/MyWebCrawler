@@ -1,30 +1,22 @@
-package com.soonyong.mywebcrawler.crawl;
+package com.soonyong.mywebcrawler.crawl
 
-import android.util.Log;
+import android.util.Log
+import com.soonyong.mywebcrawler.config.CrawlConfig
+import org.jsoup.Jsoup
+import org.jsoup.nodes.Element
+import java.io.IOException
+import java.util.stream.Collectors
 
-import com.soonyong.mywebcrawler.config.CrawlConfig;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
-import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
-
-public class WebCrawler {
-
-    public List<String> getTexts(CrawlConfig.Target target) {
-        try {
-            Document document = Jsoup.connect(target.getUrl().toString()).get();
-            Log.d(getClass().getName(), "getTexts: document = " + document);
-            Elements elements = document.selectXpath(target.getTargetXPath());
-            return elements.stream().map(Element::text).collect(Collectors.toList());
-        } catch (IOException e) {
-            Log.w(getClass().getName(), "target : " + target, e);
-            return Collections.emptyList();
+class WebCrawler {
+    fun getTexts(target: CrawlConfig.Target): List<String> {
+        return try {
+            val document = Jsoup.connect(target.url.toString()).get()
+            Log.d(javaClass.name, "getTexts: document = $document")
+            val elements = document.selectXpath(target.targetXPath)
+            elements.stream().map { obj: Element -> obj.text() }.collect(Collectors.toList())
+        } catch (e: IOException) {
+            Log.w(javaClass.name, "target : $target", e)
+            emptyList<String>()
         }
     }
 }

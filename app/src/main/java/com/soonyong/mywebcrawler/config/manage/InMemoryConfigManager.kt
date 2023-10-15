@@ -1,40 +1,33 @@
-package com.soonyong.mywebcrawler.config.manage;
+package com.soonyong.mywebcrawler.config.manage
 
-import com.soonyong.mywebcrawler.config.CrawlConfig;
+import com.soonyong.mywebcrawler.config.CrawlConfig
+import java.io.IOException
+import java.net.URI
 
-import java.io.IOException;
-import java.util.List;
+class InMemoryConfigManager : ConfigManager {
+    override val crawlConfig: CrawlConfig
 
-public class InMemoryConfigManager implements ConfigManager {
-
-    private CrawlConfig crawlConfig;
-
-    public InMemoryConfigManager() {
-        List<CrawlConfig.Target> targets = new java.util.ArrayList<>();
-        targets.add(CrawlConfig.Target.builder()
-                .active(true)
-                .title("ppomppu")
-                .interval(1000000)
-                .url("https://www.ppomppu.co.kr/zboard/zboard.php?id=ppomppu")
-                .targetXPath("//*[@id=\"revolution_main_table\"]/tbody/tr/td[3]/table/tbody/tr/td[2]/div/a/font")
-                .build());
-        targets.add(CrawlConfig.Target.builder()
-                .active(true)
-                .title("default2")
-                .interval(1000000)
-                .url("http://www.google.com")
-                .targetXPath("html")
-                .build());
-        this.crawlConfig = new CrawlConfig(targets);
+    init {
+        val targets: MutableList<CrawlConfig.Target> = ArrayList()
+        targets.add(CrawlConfig.Target(
+                active =true,
+                title ="ppomppu",
+                interval =1000000,
+                url= URI("https://www.ppomppu.co.kr/zboard/zboard.php?id=ppomppu"),
+                targetXPath="//*[@id=\"revolution_main_table\"]/tbody/tr/td[3]/table/tbody/tr/td[2]/div/a/font"
+                ))
+        targets.add(CrawlConfig.Target(
+                active=true,
+                title="default2",
+                interval=1000000,
+                url=URI("http://www.google.com"),
+                targetXPath="html"
+                ))
+        crawlConfig = CrawlConfig(targets)
     }
 
-    @Override
-    public CrawlConfig getCrawlConfig() throws IOException {
-        return this.crawlConfig;
-    }
-
-    @Override
-    public void addCrawlConfigTarget(CrawlConfig.Target target) throws IOException {
-        this.crawlConfig.getTargets().add(target);
+    @Throws(IOException::class)
+    override fun addCrawlConfigTarget(target: CrawlConfig.Target) {
+        crawlConfig.targets.add(target)
     }
 }

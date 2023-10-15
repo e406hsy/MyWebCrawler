@@ -1,43 +1,28 @@
-package com.soonyong.mywebcrawler;
+package com.soonyong.mywebcrawler
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.ListFragment
+import com.soonyong.mywebcrawler.config.ConfigViewAdaptor
+import com.soonyong.mywebcrawler.databinding.FragmentFirstBinding
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.ListFragment;
 
-import com.soonyong.mywebcrawler.config.ConfigViewAdaptor;
-import com.soonyong.mywebcrawler.databinding.FragmentFirstBinding;
+class FirstFragment : ListFragment() {
+    private var binding: FragmentFirstBinding? = null
 
-import lombok.SneakyThrows;
-
-public class FirstFragment extends ListFragment {
-
-    private FragmentFirstBinding binding;
-
-    @SneakyThrows
-    @Override
-    public View onCreateView(
-            LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState
-    ) {
-        binding = FragmentFirstBinding.inflate(inflater, container, false);
-        setListAdapter(new ConfigViewAdaptor(getContext()));
-
-        return binding.getRoot();
-
+    override fun onCreateView(
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentFirstBinding.inflate(inflater, container, false)
+        listAdapter = context?.let { ConfigViewAdaptor(it) }
+        return binding!!.root
     }
 
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
-    }
-
 }

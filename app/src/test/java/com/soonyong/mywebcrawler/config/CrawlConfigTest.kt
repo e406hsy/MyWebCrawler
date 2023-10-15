@@ -1,22 +1,17 @@
-package com.soonyong.mywebcrawler.config;
+package com.soonyong.mywebcrawler.config
 
+import com.fasterxml.jackson.core.JsonProcessingException
+import com.fasterxml.jackson.databind.ObjectMapper
+import org.junit.Assert
+import org.junit.Assert.assertEquals
+import org.junit.Test
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-public class CrawlConfigTest {
-
-    private static final ObjectMapper objectMapper = new ObjectMapper();
-
+class CrawlConfigTest {
     @Test
-    public void testDeserialize() throws JsonProcessingException {
+    @Throws(JsonProcessingException::class)
+    fun testDeserialize() {
         // given
-        String content = "{" +
+        val content = "{" +
                 "   \"targets\" : " +
                 "   [" +
                 "       {" +
@@ -27,19 +22,23 @@ public class CrawlConfigTest {
                 "           \"targetXPath\":\"myXPath\"" +
                 "       }" +
                 "   ]" +
-                "}";
+                "}"
 
         // when
-        CrawlConfig crawlConfig = objectMapper.readValue(content, CrawlConfig.class);
+        val crawlConfig = objectMapper.readValue(content, CrawlConfig::class.java)
 
         // then
-        assertEquals(1, crawlConfig.getTargets().size());
-        CrawlConfig.Target target = crawlConfig.getTargets().get(0);
-        assertEquals("https", target.getUrl().getScheme());
-        assertEquals("www.google.com", target.getUrl().getHost());
-        assertTrue(target.isActive());
-        assertEquals(1000, target.getInterval());
-        assertEquals("myXPath", target.getTargetXPath());
-        assertEquals("my title", target.getTitle());
+        assertEquals(1, crawlConfig.targets.size)
+        val target: CrawlConfig.Target = crawlConfig.targets[0]
+        assertEquals("https", target.url.scheme)
+        assertEquals("www.google.com", target.url.host)
+        Assert.assertTrue(target.active)
+        assertEquals(1000, target.interval)
+        assertEquals("myXPath", target.targetXPath)
+        assertEquals("my title", target.title)
+    }
+
+    companion object {
+        private val objectMapper = ObjectMapper()
     }
 }

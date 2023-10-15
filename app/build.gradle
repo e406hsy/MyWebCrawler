@@ -1,5 +1,6 @@
 plugins {
     id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
 }
 
 android {
@@ -49,9 +50,11 @@ dependencies {
     // jsoup
     implementation group: 'org.jsoup', name: 'jsoup', version: '1.14.3'
 
-    // lombok
-    compileOnly 'org.projectlombok:lombok:1.18.12'
-    annotationProcessor 'org.projectlombok:lombok:1.18.12'
+
+    // kotlin
+    implementation 'androidx.core:core-ktx:+'
+
+    implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.9.8'
 
 
     testImplementation 'junit:junit:4.+'

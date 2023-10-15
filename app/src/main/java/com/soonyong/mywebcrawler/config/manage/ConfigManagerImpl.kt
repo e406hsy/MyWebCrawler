@@ -1,70 +1,49 @@
-package com.soonyong.mywebcrawler.config.manage;
+package com.soonyong.mywebcrawler.config.manage
 
-import android.content.Context;
+import android.content.Context
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.soonyong.mywebcrawler.config.CrawlConfig
+import java.io.File
+import java.io.FileNotFoundException
+import java.io.IOException
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.soonyong.mywebcrawler.config.CrawlConfig;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
-public class ConfigManagerImpl implements ConfigManager {
-
-    private final ObjectMapper objectMapper = new ObjectMapper();
-    private CrawlConfig crawlConfig;
-    private final Context context;
-    private final String configFileName;
-    private static final String DEFAULT_CONFIG_FILE_NAME = "crawlConfig.json";
-
-    public ConfigManagerImpl(Context context) throws IOException {
-        this(context, DEFAULT_CONFIG_FILE_NAME);
-    }
-
-    public ConfigManagerImpl(Context context, String fileName) throws IOException {
-        this.context = context;
-        this.configFileName = fileName;
-        File file = new File(this.context.getFilesDir(), this.configFileName);
-        if (!file.exists()) {
-            file.createNewFile();
-            setCrawlConfig(new CrawlConfig());
+class ConfigManagerImpl @JvmOverloads constructor(private val context: Context, private val configFileName: String = DEFAULT_CONFIG_FILE_NAME) : ConfigManager {
+    private val objectMapper = jacksonObjectMapper()
+    override var crawlConfig: CrawlConfig = CrawlConfig()
+        set(value) {
+            field = value
+            saveCrawlConfig()
         }
 
-    }
-
-    @Override
-    public CrawlConfig getCrawlConfig() throws IOException {
-        if (this.crawlConfig == null) {
-            try (FileInputStream fileInputStream = this.context.openFileInput(this.configFileName)) {
-                this.crawlConfig = objectMapper.readValue(fileInputStream, CrawlConfig.class);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-                throw e;
+    init {
+        val file = File(context.filesDir, configFileName)
+        if (!file.exists()) {
+            file.createNewFile()
+            this.crawlConfig =CrawlConfig()
+        } else {
+            file.reader().use {
+                this.crawlConfig = objectMapper.readValue(it, CrawlConfig::class.java)
             }
         }
-        return this.crawlConfig;
     }
 
-    private void setCrawlConfig(CrawlConfig crawlConfig) throws IOException {
-        this.crawlConfig = crawlConfig;
-        saveCrawlConfig();
+    @Throws(IOException::class)
+    override fun addCrawlConfigTarget(target: CrawlConfig.Target) {
+        crawlConfig.targets.add(target)
+        saveCrawlConfig()
     }
 
-    @Override
-    public void addCrawlConfigTarget(CrawlConfig.Target target) throws IOException {
-        this.crawlConfig.getTargets().add(target);
-        saveCrawlConfig();
-    }
-
-    private void saveCrawlConfig() throws IOException {
-        try (FileOutputStream fileOutputStream = this.context.openFileOutput(this.configFileName, Context.MODE_PRIVATE)) {
-            objectMapper.writeValue(fileOutputStream, this.crawlConfig);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            throw e;
+    @Throws(IOException::class)
+    private fun saveCrawlConfig() {
+        try {
+            context.openFileOutput(configFileName, Context.MODE_PRIVATE).use { fileOutputStream -> objectMapper.writeValue(fileOutputStream, crawlConfig) }
+        } catch (e: FileNotFoundException) {
+            e.printStackTrace()
+            throw e
         }
     }
 
+    companion object {
+        private const val DEFAULT_CONFIG_FILE_NAME = "crawlConfig.json"
+    }
 }

@@ -1,11 +1,11 @@
-package com.soonyong.mywebcrawler.config.manage;
+package com.soonyong.mywebcrawler.config.manage
 
-import com.soonyong.mywebcrawler.config.CrawlConfig;
+import com.soonyong.mywebcrawler.config.CrawlConfig
+import java.io.IOException
 
-import java.io.IOException;
+interface ConfigManager {
+    val crawlConfig: CrawlConfig
 
-public interface ConfigManager {
-    CrawlConfig getCrawlConfig() throws IOException;
-
-    void addCrawlConfigTarget(CrawlConfig.Target target) throws IOException;
+    @Throws(IOException::class)
+    fun addCrawlConfigTarget(target: CrawlConfig.Target)
 }
